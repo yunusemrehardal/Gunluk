@@ -1,8 +1,18 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<Gonderi>
+@{
+    ViewData["Title"] = ViewBag.Baslik ?? "Yazılarım";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h3 class="pb-4 mb-4 fst-italic border-bottom">
+    @ViewData["Title"]
+</h3>
+
+@foreach (var gonderi in Model)
+{
+    <article class="blog-post">
+        <h2 class="blog-post-title mb-1">@gonderi.Baslik</h2>
+        <p class="blog-post-meta"><a href="#">Yönetici</a> tarafından @gonderi.OlusturulmaZamani.ToShortDateString() tarihinde yazıldı.</p>
+
+        @Html.Raw(gonderi.Icerik)
+    </article>
+}

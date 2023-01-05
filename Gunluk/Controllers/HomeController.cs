@@ -15,7 +15,7 @@ namespace Gunluk.Controllers
             _db = db;
         }
 
-        public IActionResult Index(int? kategoriId)
+        public IActionResult Index(int? kategoriId, int sayfa = 1)
         {
             IQueryable<Gonderi> gonderiler = _db.Gonderiler;
 
@@ -25,7 +25,21 @@ namespace Gunluk.Controllers
                 ViewBag.Baslik = _db.Kategoriler.Find(kategoriId)?.Ad;
             }
 
-            return View(gonderiler.ToList());
+            int sayfaAdet = (int)Math.Ceiling((double)gonderiler.Count() / Sabitler.SAYFA_BASINA_GONDERI);
+
+            gonderiler = gonderiler
+                .Skip((sayfa - 1) * Sabitler.SAYFA_BASINA_GONDERI)
+                .Take(Sabitler.SAYFA_BASINA_GONDERI);
+
+            var vm = new HomeViewModel() 
+            {
+                KategoriId= kategoriId,
+                Gonderiler = gonderiler.ToList(),
+                Sayfa = sayfa,
+                SayfaAdet= sayfaAdet
+            };
+
+            return View(vm);
         }
 
         public IActionResult Privacy()

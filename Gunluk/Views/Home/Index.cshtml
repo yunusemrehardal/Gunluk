@@ -1,4 +1,4 @@
-﻿@model List<Gonderi>
+﻿@model HomeViewModel
 @{
     ViewData["Title"] = ViewBag.Baslik ?? "Yazılarım";
 }
@@ -7,7 +7,7 @@
     @ViewData["Title"]
 </h3>
 
-@foreach (var gonderi in Model)
+@foreach (var gonderi in Model.Gonderiler)
 {
     <article class="blog-post">
         <h2 class="blog-post-title mb-1">@gonderi.Baslik</h2>
@@ -16,3 +16,25 @@
         @Html.Raw(gonderi.Icerik)
     </article>
 }
+
+<nav class="blog-pagination d-flex justify-content-center" aria-label="Pagination">
+    @if (Model.EskisiVar)
+    {
+        <a class="btn btn-outline-primary rounded-pill"
+           asp-route-sayfa="@(Model.Sayfa + 1)" asp-route-kategoriId="@(Model.KategoriId)">Daha Eski</a>
+    }
+    else
+    {
+        <a class="btn btn-outline-secondary rounded-pill disabled">Daha Eski</a>
+    }
+
+    @if (Model.YenisiVar)
+    {
+        <a class="btn btn-outline-primary rounded-pill"
+           asp-route-sayfa="@(Model.Sayfa - 1)" asp-route-kategoriId="@(Model.KategoriId)">Daha Yeni</a>
+    }
+    else
+    {
+        <a class="btn btn-outline-secondary rounded-pill disabled">Daha Yeni</a>
+    }
+</nav>

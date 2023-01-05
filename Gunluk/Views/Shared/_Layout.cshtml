@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="tr">
+<html lang="tr" class="h-100">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,13 +12,14 @@
     <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
     <link href="~/css/site.css" rel="stylesheet">
 </head>
-<body>
+<body class="h-100 d-flex-column">
 
     <div class="container mb-3">
         <header class="blog-header lh-1 py-3">
             <div class="row flex-nowrap justify-content-between align-items-center">
                 <div class="col-4 pt-1">
                     <a asp-controller="Home" asp-action="Index" class="link-secondary">Anasayfa</a>
+                    <a asp-controller="Home" asp-action="Privacy" class="link-secondary">Gizlilik</a>
                 </div>
                 <div class="col-4 text-center">
                     <a class="blog-header-logo text-dark" href="#">Günlük</a>
@@ -27,15 +28,15 @@
                     <a class="link-secondary" href="#" aria-label="Search">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5" /><path d="M21 21l-5.2-5.2" /></svg>
                     </a>
-                    <a asp-controller="Home" asp-action="Privacy" class="btn btn-sm btn-outline-secondary">Gizlilik</a>
+                    <a class="btn btn-sm btn-outline-secondary" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin</a>
                 </div>
             </div>
         </header>
     </div>
 
     <main class="container">
-        <div class="row g-5">
-            <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-8 pe-md-5">
                 @RenderBody()
             </div>
 
@@ -55,7 +56,7 @@
         </div>
     </main>
 
-    <footer class="blog-footer">
+    <footer class="blog-footer mt-auto">
         <p>Günlük &copy; @DateTime.Now.Year</p>
         <p>
             <a href="#">Başa Dön</a>

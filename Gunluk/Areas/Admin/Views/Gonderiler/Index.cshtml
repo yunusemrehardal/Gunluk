@@ -3,6 +3,13 @@
     ViewData["Title"] = "Gonderiler";
 }
 
+@if (ViewBag.Mesaj != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.Mesaj
+    </div>
+}
+
 <table class="table table-striped" id="table">
     <thead>
         <tr>

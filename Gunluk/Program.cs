@@ -32,4 +32,11 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+//VERÝTABANI YOKSA OLUÞTUR(MIGRATION YAPILMADIYSA YAP)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetService<UygulamaDbContext>();
+    db.Database.Migrate();
+}
+
 app.Run();

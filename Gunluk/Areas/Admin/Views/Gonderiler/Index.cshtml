@@ -18,6 +18,7 @@
             <th>İçerik</th>
             <th>Oluşturma Zamani</th>
             <th>Kategori</th>
+            <th>İşlemler</th>
         </tr>
     </thead>
     <tbody>
@@ -26,13 +27,44 @@
             <tr>
                 <td>@item.Id</td>
                 <td>@item.Baslik</td>
-                <td>@(item.Icerik.Length > 40 ? item.Icerik.Remove(40) + "..." : item.Icerik)</td>
+                <td>@(item.Icerik!.Length > 40 ? item.Icerik.Remove(40) + "..." : item.Icerik)</td>
                 <td>@item.OlusturulmaZamani</td>
                 <td>@item.Kategori.Ad</td>
+                <td>
+                    <a asp-action="Duzenle" asp-route-id="@item.Id" class="btn btn-warning">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a href="#!" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#silmeModal" data-bs-sil-id="@item.Id">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+
+<!-- Modal -->
+<form asp-action="Sil" method="post" id="silForm">
+    <input type="hidden" name="id" id="silId" />
+    <div class="modal fade" id="silmeModal" tabindex="-1" aria-labelledby="silmeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="silmeModal">Silme Onayı</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Seçtiğiniz gönderi silinecektir. Onaylıyor musunuz?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-primary">Evet, Sil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 @section Scripts {
     <script>
@@ -40,6 +72,14 @@
             language: {
                 url: "https://cdn.datatables.net/plug-ins/1.13.1/i18n/tr.json"
             }
+        });
+
+        const silmeModal = document.getElementById("silmeModal");
+
+        silmeModal.addEventListener("show.bs.modal", (event) => {
+            const tiklanan = event.relatedTarget;
+            const id = tiklanan.getAttribute("data-bs-sil-id");
+            document.getElementById("silId").value = id;
         });
     </script>
 }
